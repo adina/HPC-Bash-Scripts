@@ -1,0 +1,21 @@
+#!/bin/bash -login
+#PBS -l walltime=150:00:00,nodes=01:ppn=8,mem=2gb
+#PBS -q main
+#PBS -M adina.chuang@gmail.com
+#PBS -m abe
+
+#assumes you have velvet and oases installed locally 
+#assumes oases and velvet are correctly pointing to each other
+#assumes all velvet and oases commands in bin
+
+module swap intelcc gnu
+module load use.cus gcc
+export OMP_NUM_THREADS=8
+export OMP_THREAD_LIMIT=8
+
+cd /mnt/scratch/howead/test
+
+velveth velvet-test 33 -fasta -short test.se -shortPaired test.pe
+velvetg velvet-test -read_trkg yes
+oases velvet-test
+

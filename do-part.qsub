@@ -1,0 +1,14 @@
+#!/bin/bash -login
+#PBS -l walltime=100:00:00,nodes=01:ppn=8,mem=66gb
+#PBS -q main
+#PBS -M adina.chuang@gmail.com
+#PBS -m abe
+
+module load use.cus python/2.7.1
+PYTHONPATH=~/khmer/python:~/screed
+
+cd /mnt/scratch/howead/rumen-random
+python ~/khmer/scripts/do-partition.py rumen50mrand.fa
+python ~/khmer/scripts/repartition-lump.py rumen50mrand.fa *pmap 
+python ~/khmer/scripts/filter-stoptags.py *.stoptags rumen50mrand.fa 
+python ~/khmer/scripts/do-partition.py *.stopfilt 
